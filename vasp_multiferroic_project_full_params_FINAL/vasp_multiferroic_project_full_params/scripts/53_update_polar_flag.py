@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Dict, Any, List
 import numpy as np
 
-from _common import load_csv, write_csv, now, outcar_is_complete, get_verbose, log, vlog
+from _common import load_csv, write_csv, now, outcar_is_complete, get_verbose
 
 RUNS_ROOT = Path("runs")
 SYM_TABLE = Path("results/tables/symmetry_summary.csv")

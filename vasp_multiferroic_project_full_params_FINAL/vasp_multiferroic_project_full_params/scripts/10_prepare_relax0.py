@@ -10,7 +10,7 @@ from pymatgen.core import Structure
 from pymatgen.io.vasp.inputs import Poscar
 
 from _vasp_inputs import sorted_structure_for_vasp
-from _common import ensure_dir, get_verbose, log, vlog
+from _common import ensure_dir, get_verbose
 
 CIF_DIR = Path(os.environ.get("CIF_DIR", "data/cifs"))
 RUNS_ROOT = Path(os.environ.get("RUNS_ROOT", "runs"))
@@ -68,7 +68,8 @@ def find_best_potcar_symbol(el: str) -> str:
 def concat_potcar(elements: List[str], out_path: Path):
     key = tuple(elements)
     if key in POTCAR_CACHE:
-        out_path.write_bytes(POTCAR_CACHE[key]); return
+        out_path.write_bytes(POTCAR_CACHE[key])
+        return
     blob = b""
     for el in elements:
         blob += (POTCAR_ROOT / find_best_potcar_symbol(el) / "POTCAR").read_bytes()
@@ -109,9 +110,12 @@ def write_incar(path: Path, elements: List[str], magmom: List[float]):
         ldau_l, ldau_u = [], []
         for el in elements:
             u = U_EFF.get(el, 0.0)
-            if el in F_ELEMENTS: ldau_l.append("3")
-            elif el in D_ELEMENTS: ldau_l.append("2")
-            else: ldau_l.append("-1")
+            if el in F_ELEMENTS:
+                ldau_l.append("3")
+            elif el in D_ELEMENTS:
+                ldau_l.append("2")
+            else:
+                ldau_l.append("-1")
             ldau_u.append(f"{u:.2f}")
         lines += [
             "LDAUL = " + " ".join(ldau_l),
@@ -158,7 +162,8 @@ def main():
         write_incar(out/"INCAR", elem_order, magmom)
 
         kp = out/"KPOINTS"
-        if kp.exists(): kp.unlink()
+        if kp.exists():
+            kp.unlink()
 
         concat_potcar(elem_order, out/"POTCAR")
         write_pbs(out/"job_relax0.pbs", (job[:32] + "_r0"))

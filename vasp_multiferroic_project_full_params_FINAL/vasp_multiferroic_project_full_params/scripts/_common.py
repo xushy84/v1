@@ -3,8 +3,10 @@
 from __future__ import annotations
 from pathlib import Path
 import os
+import sys
 from typing import Optional, Dict, Any, List
-import re, csv
+import re
+import csv
 from datetime import datetime
 
 def ensure_dir(p: Path) -> None:
@@ -78,11 +80,8 @@ def pick_ids_from_table(table_path: Path, flag_col: str = "keep", flag_yes: str 
 # =========================
 # Logging helpers
 # =========================
-import sys
-from datetime import datetime as _dt
-
 def log(level: str, msg: str) -> None:
-    ts = _dt.now().strftime("%Y-%m-%d %H:%M:%S")
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"[{ts}] [{level.upper()}] {msg}", file=sys.stdout, flush=True)
 
 def vlog(enabled: bool, level: str, msg: str) -> None:

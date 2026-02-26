@@ -3,7 +3,7 @@
 from __future__ import annotations
 import os
 from pathlib import Path
-from _common import ensure_dir, load_csv, get_verbose, log, vlog
+from _common import ensure_dir, load_csv, get_verbose
 
 RUNS_ROOT = Path("runs")
 MAG_GS_TABLE = Path("results/tables/mag_gs_summary.csv")
@@ -65,7 +65,8 @@ def main():
     for r in rows:
         if r.get("keep") != "Y" or not r.get("gs_state"):
             continue
-        cid = r["id"]; gs = r["gs_state"]
+        cid = r["id"]
+        gs = r["gs_state"]
         src = RUNS_ROOT/cid/f"mag_{gs}"
         pos = src/"CONTCAR" if (src/"CONTCAR").exists() else src/"POSCAR"
         pot = src/"POTCAR"
@@ -76,7 +77,8 @@ def main():
         (out/"POSCAR").write_text(pos.read_text())
         (out/"POTCAR").write_bytes(pot.read_bytes())
         kp = out/"KPOINTS"
-        if kp.exists(): kp.unlink()
+        if kp.exists():
+            kp.unlink()
         write_incar(out/"INCAR")
         write_pbs(out/"job_static_gap.pbs", f"{cid[:28]}_gap"[:36])
     print("[OK] prepared static_gap")

@@ -15,7 +15,7 @@ Output:
 from __future__ import annotations
 from pathlib import Path
 from typing import Dict, Any, List
-from _common import outcar_is_complete, parse_last_toten, parse_magmom_total, write_csv, now, get_verbose, log, vlog
+from _common import outcar_is_complete, parse_last_toten, parse_magmom_total, write_csv, now, get_verbose
 
 RUNS_ROOT = Path("runs")
 OUT_TABLE = Path("results/tables/mag_gs_summary.csv")

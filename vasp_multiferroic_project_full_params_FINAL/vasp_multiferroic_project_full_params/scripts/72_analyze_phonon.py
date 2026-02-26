@@ -21,11 +21,10 @@ from __future__ import annotations
 
 import os
 
-import os
 from pathlib import Path
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List
 
-from _common import ensure_dir, write_csv, now, outcar_is_complete, get_verbose, log, vlog
+from _common import ensure_dir, write_csv, now, outcar_is_complete, get_verbose
 
 RUNS_ROOT = Path(os.environ.get("RUNS_ROOT", "runs"))
 OUT_TABLE = Path("results/tables/phonon_summary.csv")
@@ -72,10 +71,7 @@ def main():
     rows_out: List[Dict[str, Any]] = []
 
     try:
-        import phonopy
-        from phonopy import Phonopy
         from phonopy.structure.atoms import PhonopyAtoms
-        from phonopy.file_IO import parse_FORCE_SETS
     except Exception:
         rows_out.append({
             "id": "*",
@@ -128,7 +124,7 @@ def main():
         base_poscar = disp_dirs[0]/"POSCAR"
         try:
             s = Structure.from_file(str(base_poscar))
-            pa = PhonopyAtoms(
+            _ = PhonopyAtoms(
                 symbols=[str(sp.specie) for sp in s.sites],
                 cell=s.lattice.matrix,
                 scaled_positions=s.frac_coords,

@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional
 import re
 
-from _common import outcar_is_complete, parse_last_toten, write_csv, now, get_verbose, log, vlog
+from _common import outcar_is_complete, parse_last_toten, write_csv, now, get_verbose
 
 RUNS_ROOT = Path("runs")
 OUT_TABLE = Path("results/tables/gap_summary.csv")
