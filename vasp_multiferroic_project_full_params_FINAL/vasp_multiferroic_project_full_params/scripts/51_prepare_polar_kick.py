@@ -21,7 +21,7 @@ import numpy as np
 
 from pymatgen.core import Structure
 
-from _common import ensure_dir, load_csv, get_verbose, log, vlog
+from _common import ensure_dir, load_csv, get_verbose
 
 RUNS_ROOT = Path("runs")
 SYM_TABLE = Path("results/tables/symmetry_summary.csv")

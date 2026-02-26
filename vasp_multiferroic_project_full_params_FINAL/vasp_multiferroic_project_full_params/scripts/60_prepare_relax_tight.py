@@ -43,9 +43,11 @@ EG_MIN = float(os.environ.get("EG_MIN", "0.5"))
 
 def _f(x):
     try:
-        if x is None: return None
+        if x is None:
+            return None
         s = str(x).strip()
-        if s == "" or s.lower() == "nan": return None
+        if s == "" or s.lower() == "nan":
+            return None
         return float(s)
     except Exception:
         return None
@@ -167,7 +169,8 @@ def main():
                 (out/"POTCAR").write_bytes((base_dir/"POTCAR").read_bytes())
                 # ensure no KPOINTS
                 kp = out/"KPOINTS"
-                if kp.exists(): kp.unlink()
+                if kp.exists():
+                    kp.unlink()
                 write_incar(out/"INCAR")
                 write_pbs(out/"job_relax_tight.pbs", f"{cid[:26]}_rt"[:36])
                 prepared += 1

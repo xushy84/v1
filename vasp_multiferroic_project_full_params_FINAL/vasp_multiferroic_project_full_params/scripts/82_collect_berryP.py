@@ -20,7 +20,7 @@ from typing import Dict, Any, List, Optional, Tuple
 import re
 import math
 
-from _common import outcar_is_complete, write_csv, now, get_verbose, log, vlog
+from _common import outcar_is_complete, write_csv, now, get_verbose, log
 
 RUNS_ROOT = Path("runs")
 OUT_TABLE = Path("results/tables/polarization_summary.csv")
@@ -60,7 +60,8 @@ VERBOSE = get_verbose()
 
 def main():
     rows: List[Dict[str, Any]] = []
-    done=0; todo=0
+    done = 0
+    todo = 0
     for jobdir in sorted(RUNS_ROOT.glob("*")):
         step = jobdir/"berryP"
         if not step.is_dir():

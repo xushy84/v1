@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Dict, Any, List
 import numpy as np
 
-from _common import ensure_dir, load_csv, write_csv, now, get_verbose, log, vlog
+from _common import ensure_dir, load_csv, write_csv, now, get_verbose
 
 RUNS_ROOT = Path("runs")
 MAG_GS_TABLE = Path("results/tables/mag_gs_summary.csv")

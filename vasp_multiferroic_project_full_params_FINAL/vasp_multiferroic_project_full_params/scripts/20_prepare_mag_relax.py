@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import List
 
 from pymatgen.core import Structure
-from _common import ensure_dir, pick_ids_from_table, get_verbose, log, vlog
+from _common import ensure_dir, pick_ids_from_table, get_verbose
 from _vasp_inputs import sorted_structure_for_vasp
 
 RUNS_ROOT = Path("runs")
@@ -28,7 +28,8 @@ def make_magmom(struct: Structure, mode: str) -> List[float]:
     if mode == "AFM1":
         out, sign = [], 1.0
         for b in base:
-            out.append(sign*b); sign *= -1.0
+            out.append(sign * b)
+            sign *= -1.0
         return out
     return base
 
@@ -100,7 +101,8 @@ def main():
             (out/"POSCAR").write_text(contcar.read_text())
             (out/"POTCAR").write_bytes(potcar.read_bytes())
             kp = out/"KPOINTS"
-            if kp.exists(): kp.unlink()
+            if kp.exists():
+                kp.unlink()
             magmom = make_magmom(s, st)
             write_incar(out/"INCAR", magmom, st)
             write_pbs(out/"job_mag.pbs", f"{cid[:26]}_{st}"[:36])

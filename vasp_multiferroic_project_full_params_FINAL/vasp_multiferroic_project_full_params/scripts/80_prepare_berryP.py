@@ -124,7 +124,8 @@ def main():
         (out/"POSCAR").write_text(pos.read_text())
         (out/"POTCAR").write_bytes(pot.read_bytes())
         kp = out/"KPOINTS"
-        if kp.exists(): kp.unlink()
+        if kp.exists():
+            kp.unlink()
         write_incar(out/"INCAR")
         write_pbs(out/"job_berryP.pbs", f"{cid[:26]}_P"[:36])
         rows_out.append({"id": cid, "status":"PREPARED", "note":"LCALCPOL", "collected_at": now()})

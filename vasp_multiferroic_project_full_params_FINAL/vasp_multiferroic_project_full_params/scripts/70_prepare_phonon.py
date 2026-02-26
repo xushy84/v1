@@ -47,7 +47,7 @@ import os
 from pathlib import Path
 from typing import Dict, Any, List, Tuple
 
-from _common import ensure_dir, load_csv, write_csv, now, get_verbose, log, vlog
+from _common import ensure_dir, load_csv, write_csv, now, get_verbose, log
 
 RUNS_ROOT = Path(os.environ.get("RUNS_ROOT", "runs"))
 
@@ -96,7 +96,8 @@ def pick_source_structure(cid: str) -> Tuple[Path | None, str]:
         mag_rows = load_csv(MAG_GS)
         for r in mag_rows:
             if r.get("id") == cid:
-                gs_state = r.get("gs_state"); break
+                gs_state = r.get("gs_state")
+                break
     if gs_state:
         for fn in ["CONTCAR","POSCAR"]:
             p = RUNS_ROOT/cid/f"mag_{gs_state}"/fn
@@ -111,15 +112,18 @@ def pick_source_structure(cid: str) -> Tuple[Path | None, str]:
 def pick_potcar(cid: str) -> Path | None:
     # Prefer relax_tight POTCAR; else mag_GS POTCAR; else relax0 POTCAR
     p = RUNS_ROOT/cid/"relax_tight"/"POTCAR"
-    if p.exists(): return p
+    if p.exists():
+        return p
     gs_state = None
     if MAG_GS.exists():
         for r in load_csv(MAG_GS):
             if r.get("id") == cid:
-                gs_state = r.get("gs_state"); break
+                gs_state = r.get("gs_state")
+                break
     if gs_state:
         p = RUNS_ROOT/cid/f"mag_{gs_state}"/"POTCAR"
-        if p.exists(): return p
+        if p.exists():
+            return p
     p = RUNS_ROOT/cid/"relax0"/"POTCAR"
     return p if p.exists() else None
 
@@ -193,7 +197,6 @@ def main():
         return
 
     from pymatgen.core import Structure
-    import numpy as np
 
     scmat = _parse_supercell(PH_SUPERCELL)
 
